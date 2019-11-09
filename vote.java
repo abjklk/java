@@ -7,11 +7,8 @@ public class vote {
         Scanner obj = new Scanner(System.in);
         for(int i=0;i<20;i++)
         {
-            String x=obj.nextLine();
-            // System.out.println(x);
-            int d = Integer.parseInt(x);
-            System.out.println(d);
-            a[d]+=1;
+            int x=obj.nextInt();
+            a[x]+=1;
         }
         System.out.println("Result\n");
         int max=a[0];

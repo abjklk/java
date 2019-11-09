@@ -1,5 +1,5 @@
 
-public class Industry {
+ class Industry {
     public double baseval;
     Company[] companies;
     public Industry()
