@@ -1,0 +1,13 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		//System.out.println("Hello World");
+		List list = new ArrayList();    
+        list.add(10);  
+        list.add("10");  
+        List<Integer> list = new ArrayList<Integer>();    
+        list.add(10);  
+        list.add("10");// compile-time error  
+	}
+}

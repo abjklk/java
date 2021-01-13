@@ -1,0 +1,14 @@
+import java.util.*;
+public class Main
+{
+	public static void main(String[] args) {
+		//System.out.println("Hello World");
+	List list = new ArrayList();    
+    list.add("hello");    
+    String s = (String) list.get(0);//typecasting    
+    //After Generics, we don't need to typecast the object.  
+    List<String> list1 = new ArrayList<String>();    
+    list1.add("hello");    
+    String s1 = list1.get(0);    
+	}
+}

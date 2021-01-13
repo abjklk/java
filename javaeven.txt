@@ -1,0 +1,186 @@
+import java.io.*;
+import java.util.*;
+import java.lang.*;
+
+
+class MyException extends Exception{
+	String errmsg;
+	
+	public MyException(String errmsg)
+	{
+		this.errmsg=errmsg;
+	}
+	
+	public void disperr()
+	{
+		System.out.println(errmsg);
+	}
+}
+
+
+interface CalculatePrice{
+	double calc();		
+}
+
+class Flight implements CalculatePrice{
+	
+	int capacity;
+	String destination;
+	String airline;
+	double offer;
+
+	
+	
+	
+	Flight(int capacity,String destination, String airline,double offer)
+	{
+		this.capacity=capacity;
+		this.destination=destination;
+		this.airline=airline;
+		this.offer=offer;
+		
+	}
+	
+	
+	void display() {
+		
+		System.out.println("Airline:"+airline);
+		System.out.println("Destination:"+destination);
+		System.out.println("Discount %:"+offer);
+		System.out.println("Capacity:"+capacity);
+		
+	}
+	public double calc() {
+		return 0;
+	}
+}
+	
+
+
+class Domestic extends Flight {
+	
+	double baseprice;
+	
+	Domestic(int capacity,String destination, String airline,double offer,double baseprice)
+	{
+		super(capacity,destination,airline,offer);
+		this.baseprice=baseprice;
+		
+	}
+	
+	
+	public double calc()
+	{
+		return baseprice-(offer*baseprice);
+	}
+	
+	void display()
+	{
+		super.display();
+		System.out.println("Base price :"+baseprice);
+		System.out.println("Final price  :"+calc());
+	}
+
+}
+
+class International extends Flight {
+	
+	double baseprice;
+	double extracharges;
+	
+	International(int capacity,String destination, String airline,double offer,double baseprice,double extracharges)
+	{
+		super(capacity,destination,airline,offer);
+		this.baseprice=baseprice;
+		this.extracharges=extracharges;
+		
+	}
+	
+	public double calc()
+	{
+		return baseprice+extracharges-(offer*baseprice);
+	}
+	
+	void display()
+	{
+		super.display();
+		System.out.println("Base price :"+baseprice);
+		System.out.println("Extra charges :"+extracharges);
+		System.out.println("Final price  :"+calc());
+		
+	}
+	
+}
+
+class Aviation{
+	
+	Flight flights[];
+	
+	int  Leastprice(int capacity1 ,String dest,int size) throws MyException
+	{
+		double min1=999999;
+		int index=0;
+		int flag=0;
+		for(int i=0;i<size;i++)
+		{
+			
+			if(flights[i].destination.equals(dest) && flights[i].capacity==capacity1)
+			{
+			if (flights[i].calc()<min1)
+			{
+				min1=flights[i].calc();
+				index=i;
+			}
+                 flag=1;
+			}	
+		}
+		
+		if (flag==0)
+		{
+			throw new MyException("Invalid input");
+		}
+		
+		return index;
+	}
+}
+
+public class Test {
+
+	public static void main(String[] args) {
+		
+		Flight [] a=new Flight[3];
+		
+		a[0]=new Domestic(50,"ABC","Jet airlines",0.1,15000.0);
+		a[1]=new Domestic(50,"ABC","Kingfisher",0.2,10000.0);
+		a[2]=new International(50,"XYZ","Indian airlines",0.3,10000.0,5000.0);
+		
+		Aviation  IndianAviation=new Aviation();
+		
+		IndianAviation.flights=a;
+		
+		 Scanner in =new Scanner(System.in);
+		
+	    String dest;
+	    int capacity;
+		 try {
+		 System.out.println("Enter the flight capacity");
+		 capacity=in.nextInt();
+		 System.out.println("Enter the destination");
+		 dest=in.next();
+		 
+		a[IndianAviation.Leastprice(capacity,dest, a.length)].display();
+		
+		}
+		 catch(MyException e )
+		{
+			 e.disperr();
+		}
+		 
+		catch(InputMismatchException e1)
+		{
+			System.out.println("Invalid input");
+		}
+		
+	}
+
+}
